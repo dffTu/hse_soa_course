@@ -25,7 +25,7 @@ model {
   }
 
   stats = service "Stats" "Сервис статистики" {
-    db = database "Clickhouse" {
+    db = database "stats" "Clickhouse" {
       table posts
       table comments
       table likes
@@ -40,10 +40,11 @@ model {
     }
   }
 
-   ui -> gateway "Отправляет запросы" "HTTPS"
+  ui -> gateway "Отправляет запросы" "HTTPS"
   gateway -> users "Маршрутизирует" "gRPC"
   gateway -> stats "Маршрутизирует" "gRPC"
   gateway -> posts "Маршрутизирует" "gRPC"
+  stats -> posts "Собирает статистику" "gRPC"
 
 }
 
