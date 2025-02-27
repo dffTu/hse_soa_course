@@ -14,6 +14,7 @@ from starlette.middleware.gzip import GZipMiddleware
 from starlette.requests import Request
 from starlette.responses import Response
 
+import config
 from api import router
 
 logger = logging.getLogger(__name__)
@@ -24,7 +25,7 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
     return await request_validation_exception_handler(request, exc)
 
 app = FastAPI(
-    title="gateway",
+    title="users",
 )
 
 app.exception_handler(RequestValidationError)(validation_exception_handler)
@@ -45,7 +46,7 @@ if __name__ == "__main__":
     logger = logging.getLogger(__name__)
     uvicorn.run(
         app,
-        host="0.0.0.1",
-        port=7777,
+        host=config.SERVER_IP,
+        port=config.PORT,
         log_level=os.getenv("LOGGING_LEVEL", "info").lower(),
     )
