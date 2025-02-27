@@ -2,8 +2,21 @@ version: "3"
 
 services:
 
+  postgres:
+    image: postgres:latest
+    container_name: postgres_container
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: gateway
+      PGDATA: /var/lib/postgresql/data/pgdata
+    ports:
+      - "5432:5432"
+
   server:
     build: .
-    command: python ./main.py
+    depends_on:
+      - postgres
+    command: python server/main.py
     ports:
       - 7777:7777

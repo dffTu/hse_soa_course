@@ -1,7 +1,9 @@
 FROM python:latest
 
-ADD server /server/
+ADD server /gateway/server/
+ADD db /gateway/db
 
-WORKDIR /server/
+WORKDIR /gateway/
+ENV PYTHONPATH="${PYTHONPATH}:/gateway"
 
-RUN pip install -r requirements.txt
+RUN pip install -r server/requirements.txt
