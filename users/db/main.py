@@ -1,7 +1,9 @@
+import random
+import string
 import psycopg2
 import time
 import os
-import sys
+from typing import Union
 
 class Database:
     def __init__(self):
@@ -42,5 +44,24 @@ class Database:
         self.__conn.commit()
 
         return True
+    
+    def auth_user(self, login: str, password: str) -> Union[None, str]:
+        cursor = self.__conn.cursor()
+        hashed_password = str(hash(password))
+
+        cursor.execute(f'SELECT * FROM logins WHERE login = \'{login}\' AND hashed_password = \'{hashed_password}\'')
+        logins = cursor.fetchall()
+        if len(logins) == 0:
+            return None
+        
+        account_id = logins[0][0]
+        token = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(10))
+
+        cursor.execute('INSERT INTO tokens (account_id, token) ' \
+                       f'VALUES ({account_id}, \'{token}\')')
+        
+        self.__conn.commit()
+
+        return token
 
 users_db = Database()
