@@ -3,5 +3,5 @@ CREATE TABLE IF NOT EXISTS accounts (
     name VARCHAR(63),
     surname VARCHAR(63),
     creation_timestamp TIMESTAMP,
-    role VARCHAR(63)
+    role VARCHAR(31)
 )

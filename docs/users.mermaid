@@ -3,16 +3,16 @@ title: users
 ---
 erDiagram
     accounts {
-        INTEGER id
+        SERIAL PRIMARY KEY id
         VARCHAR(63) name
         VARCHAR(63) surname
-        DATE creation_date
+        TIMESTAMP creation_timestamp
         VARCHAR(31) role
     }
     logins {
-        INTEGER account_id
+        INTEGER REFERENCES accounts(id) account_id
         VARCHAR(63) login
-        VARCHAR(255) hashed_password
+        VARCHAR(63) hashed_password
         BOOLEAN is_freezed
         INTEGER login_tries_in_1h
     }

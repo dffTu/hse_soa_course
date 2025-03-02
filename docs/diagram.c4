@@ -8,19 +8,14 @@ specification {
 model {
   ui = ui "UI" "Клиентская сторона"
 
-  gateway = service "Gateway" "Принимает клиентские запросы" {
-    db = database "gateway" "PostgreSQL" {
-      table requests
-      table tokens
-      table error_logs
-    }
-  }
+  gateway = service "Gateway" "Принимает клиентские запросы"
 
   users = service "Users" "Сервис авторизации" {
     db = database "users" "PostgreSQL" {
       table logins
       table accounts
       table accounts_info
+      table tokens
     }
   }
 
