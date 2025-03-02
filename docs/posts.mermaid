@@ -1,0 +1,32 @@
+---
+title: posts
+---
+erDiagram
+    posts {
+        INTEGER id
+        INTEGER author_id
+        TEXT text
+        TEXT metadata
+        TIMESTAMP creation_date
+    }
+    comments {
+        INTEGER id
+        INTEGER author_id
+        INTEGER content_id
+        TEXT text
+        TEXT metadata
+        BOOLEAN is_reply_to_comment
+        TIMESTAMP creation_date
+    }
+    likes {
+        INTEGER content_id
+        INTEGER account_id
+        BOOLEAN is_comment
+        TIMESTAMP creation_date
+        INTEGER type
+    }
+
+    posts ||--o{ comments : ""
+    comments ||--o{ comments : ""
+    posts ||--o{ likes : ""
+    comments ||--o{ likes : ""

@@ -1,0 +1,55 @@
+specification {
+    element ui 
+    element service
+    element database
+    element table
+}
+
+model {
+  ui = ui "UI" "Клиентская сторона"
+
+  gateway = service "Gateway" "Принимает клиентские запросы" {
+    db = database "gateway" "PostgreSQL" {
+      table requests
+      table tokens
+      table error_logs
+    }
+  }
+
+  users = service "Users" "Сервис авторизации" {
+    db = database "users" "PostgreSQL" {
+      table logins
+      table accounts
+      table accounts_info
+    }
+  }
+
+  stats = service "Stats" "Сервис статистики" {
+    db = database "stats" "Clickhouse" {
+      table posts
+      table comments
+      table likes
+    }
+  }
+
+  posts = service "Posts" "Сервис постов/комментариев" {
+    db = database "posts" "PostgreSQL" {
+      table posts
+      table comments
+      table likes
+    }
+  }
+
+  ui -> gateway "Отправляет запросы" "HTTPS"
+  gateway -> users "Маршрутизирует" "gRPC"
+  gateway -> stats "Маршрутизирует" "gRPC"
+  gateway -> posts "Маршрутизирует" "gRPC"
+  stats -> posts "Собирает статистику" "gRPC"
+
+}
+
+views {
+   view index {
+        include *
+    }
+}

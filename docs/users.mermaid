@@ -1,0 +1,28 @@
+---
+title: users
+---
+erDiagram
+    accounts {
+        INTEGER id
+        VARCHAR(63) name
+        VARCHAR(63) surname
+        DATE creation_date
+        VARCHAR(31) role
+    }
+    logins {
+        INTEGER account_id
+        VARCHAR(63) login
+        VARCHAR(255) hashed_password
+        BOOLEAN is_freezed
+        INTEGER login_tries_in_1h
+    }
+    user_info {
+        INTEGER account_id
+        VARCHAR(63) city
+        VARCHAR(63) email
+        VARCHAR(15) phone_number
+        TIMESTAMP last_login
+    }
+
+    accounts ||--|| logins : ""
+    accounts ||--|| user_info : ""

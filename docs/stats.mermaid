@@ -1,0 +1,25 @@
+---
+title: stats
+---
+erDiagram
+    posts {
+        INTEGER account_id
+        INTEGER posts_count
+        REAL average_likes
+        INTEGER min_likes
+        INTEGER max_likes
+    }
+    comments {
+        INTEGER account_id
+        INTEGER comments_count
+        REAL average_likes
+        INTEGER min_likes
+        INTEGER max_likes
+    }
+    likes {
+        INTEGER account_id
+        INTEGER posts_likes_count
+        INTEGER comments_likes_count
+        INTEGER posts_likes_in_24hours
+        INTEGER comments_likes_in_24hours
+    }

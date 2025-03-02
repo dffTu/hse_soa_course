@@ -1,0 +1,28 @@
+---
+title: gateway
+---
+erDiagram
+    requests {
+        INTEGER id
+        TIMESTAMP timestamp
+        VARCHAR(63) type
+        INTEGER initiator_id
+        INTEGER status
+    }
+    tokens {
+        INTEGER id
+        INTEGER account_id
+        TEXT token
+        TIMESTAMP creation_date
+        TIMESTAMP expiration_date
+        BOOLEAN active
+    }
+    error_logs {
+        INTEGER id
+        TIMESTAMP timestamp
+        INTEGER request_id
+        INTEGER error_code
+        VARCHAR(127) error_message
+    }
+
+    requests ||--|| error_logs : ""
