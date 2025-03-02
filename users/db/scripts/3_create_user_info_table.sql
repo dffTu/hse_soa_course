@@ -3,5 +3,7 @@ CREATE TABLE IF NOT EXISTS user_info (
     city VARCHAR(63),
     email VARCHAR(63),
     phone_number VARCHAR(15),
-    last_login TIMESTAMP
+    birthday DATE,
+    last_login TIMESTAMP,
+    last_update_info TIMESTAMP
 )

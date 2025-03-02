@@ -3,7 +3,7 @@ import string
 import psycopg2
 import time
 import os
-from typing import Union
+from typing import Optional, Union
 from datetime import datetime, timezone
 
 class Database:
@@ -71,5 +71,51 @@ class Database:
         self.__conn.commit()
 
         return token
+
+    def change_user_info(
+            self,
+            token: str,
+            name: Optional[str],
+            surname: Optional[str],
+            birthday: Optional[str],
+            email: Optional[str],
+            phone_number: Optional[str],
+            city: Optional[str]
+        ) -> bool:
+        cursor = self.__conn.cursor()
+
+        cursor.execute(f'SELECT * FROM tokens WHERE token = %s',
+                       (token, ))
+        account_id = cursor.fetchone()
+        if account_id is None:
+            return False
+        account_id = account_id[0]
+
+        if name is not None:
+            cursor.execute('UPDATE accounts SET name = %s WHERE id = %s', 
+                           (name, account_id))
+        if surname is not None:
+            cursor.execute('UPDATE accounts SET surname = %s WHERE id = %s', 
+                           (surname, account_id))
+        if birthday is not None:
+            cursor.execute('UPDATE user_info SET birthday = %s WHERE account_id = %s', 
+                           (birthday, account_id))
+        if email is not None:
+            cursor.execute('UPDATE user_info SET email = %s WHERE account_id = %s', 
+                           (email, account_id))
+        if phone_number is not None:
+            cursor.execute('UPDATE user_info SET phone_number = %s WHERE account_id = %s', 
+                           (phone_number, account_id))
+        if city is not None:
+            cursor.execute('UPDATE user_info SET city = %s WHERE account_id = %s', 
+                           (city, account_id))
+
+        last_update_timestamp = datetime.now(timezone.utc)
+        cursor.execute('UPDATE user_info SET last_update_info = %s WHERE account_id = %s',
+                       (last_update_timestamp, account_id))
+        
+        self.__conn.commit()
+
+        return True
 
 users_db = Database()
