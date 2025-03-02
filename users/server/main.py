@@ -10,8 +10,8 @@ from starlette.middleware.gzip import GZipMiddleware
 from starlette.requests import Request
 from starlette.responses import Response
 
-import config
-from api import router
+from server import config
+from server.api import router
 
 logger = logging.getLogger(__name__)
 

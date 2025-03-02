@@ -1,8 +1,8 @@
 from fastapi import APIRouter
 
-from . import ping
+from . import register
 
 __all__ = ("router",)
 
 router = APIRouter()
-router.include_router(ping.router, tags=["ping"])
+router.include_router(register.router, tags=["register"])
