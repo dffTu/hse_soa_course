@@ -1,0 +1,19 @@
+services:
+
+  users_postgres:
+    image: postgres:latest
+    container_name: users_postgres
+    env_file:
+      - .env
+    ports:
+      - "6666:5432"
+
+  users_server:
+    build: .
+    depends_on:
+      - users_postgres
+    env_file:
+      - .env
+    command: python server/main.py
+    ports:
+      - 8888:8888
