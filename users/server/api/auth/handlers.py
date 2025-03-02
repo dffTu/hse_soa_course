@@ -9,7 +9,7 @@ router = APIRouter()
 
 
 @router.post("/auth", response_model=Union[schemas.SuccesfulAuthResponse, schemas.ApiErrorResponse])
-async def create_user(
+async def auth_user(
     request: schemas.AuthUserRequest,
 ):
     token = users_db.auth_user(request.login, request.password)

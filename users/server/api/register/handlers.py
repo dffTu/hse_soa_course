@@ -9,7 +9,7 @@ router = APIRouter()
 
 
 @router.post("/register", response_model=Union[None, schemas.ApiErrorResponse])
-async def create_user(
+async def register_user(
     request: schemas.RegisterUserRequest,
 ):
     result = users_db.register_user(request.login, request.email, request.password)
