@@ -64,6 +64,10 @@ class Database:
         cursor.execute('INSERT INTO tokens (account_id, token) VALUES (%s, %s)',
                        (account_id, token))
         
+        last_login_timestamp = datetime.now(timezone.utc)
+        cursor.execute('UPDATE user_info SET last_login = %s WHERE account_id = %s',
+                       (last_login_timestamp, account_id))
+        
         self.__conn.commit()
 
         return token
