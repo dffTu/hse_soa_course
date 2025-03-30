@@ -52,7 +52,10 @@ class CreatePostResponse(BaseModel):
 
 class UpdatePostRequest(BaseModel):
     post_id: int
-    post: Post
+    name: str
+    description: str
+    is_private: bool
+    tags: list[str]
 
 class DeletePostRequst(BaseModel):
     post_id: int

@@ -25,10 +25,25 @@ class Service(posts_pb2_grpc.PostsServiceServicer):
         return posts_pb2.CreatePostResponse(post_id=post_id)
 
     def UpdatePost(self, request, context):
-        """Missing associated documentation comment in .proto file."""
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        tags = [str(tag) for tag in request.tags]
+        data = self.__db.update_post(
+            post_id=request.post_id,
+            name=request.name,
+            description=request.description,
+            is_private=request.is_private,
+            tags=dict({'tags': tags})
+        )
+        if data is None:
+            context.abort(grpc.StatusCode.NOT_FOUND, "Post with such id doesn't exist!")
+        return posts_pb2.Post(
+            name=data['name'],
+            description=data['description'],
+            author_id=data['author_id'],
+            is_private=data['is_private'],
+            tags=data['tags'],
+            created_at=data['created_at'],
+            updated_at=data['updated_at']
+        )
 
     def DeletePost(self, request, context):
         """Missing associated documentation comment in .proto file."""

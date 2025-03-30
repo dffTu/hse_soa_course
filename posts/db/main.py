@@ -22,17 +22,36 @@ class Database:
         self.__conn.commit()
         self.__cursor = self.__conn.cursor()
     
-    def create_post(self, name: str, description: str, author_id: int, tags: dict, is_private: Optional[bool] = None) -> int:
+    def create_post(self, name: str, description: str, author_id: int, tags: dict, is_private: bool) -> int:
         creation_timestamp = datetime.now()
 
-        if is_private is not None:
-            self.__cursor.execute('INSERT INTO posts (name, description, author_id, created_at, updated_at, is_private, tags) '
-                        'VALUES (%s, %s, %s, %s, %s, %s, %s) RETURNING id',
-                        (name, description, author_id, creation_timestamp, creation_timestamp, is_private, json.dumps(tags)))
-        else:
-            self.__cursor.execute('INSERT INTO posts (name, description, author_id, created_at, updated_at, tags) '
-                        'VALUES (%s, %s, %s, %s, %s, %s) RETURNING id',
-                        (name, description, author_id, creation_timestamp, creation_timestamp, json.dumps(tags)))
+        self.__cursor.execute('INSERT INTO posts (name, description, author_id, created_at, updated_at, tags) '
+                              'VALUES (%s, %s, %s, %s, %s, %s) RETURNING id',
+                              (name, description, author_id, creation_timestamp, creation_timestamp, json.dumps(tags)))
         post_id = self.__cursor.fetchone()[0]
+        self.__conn.commit()
 
         return post_id
+    
+    def update_post(self, post_id: int, name: str, description: str, tags: dict, is_private: bool) -> dict | None:
+        self.__cursor.execute('SELECT * FROM posts WHERE id = %s', (post_id, ))
+        if self.__cursor.fetchone() is None:
+            return None
+        
+        self.__cursor.execute('UPDATE posts SET name = %s, description = %s, updated_at = %s, tags = %s, is_private = %s '
+                              'WHERE id = %s RETURNING name, description, author_id, is_private, tags, created_at, updated_at',
+                              (name, description, datetime.now(), json.dumps(tags), is_private, post_id))
+        name, description, author_id, is_private, tags, created_at, updated_at = self.__cursor.fetchone()
+        tags = json.loads(tags)
+        result = {
+            'name': name,
+            'description': description,
+            'author_id': author_id,
+            'is_private': is_private,
+            'tags': tags,
+            'created_at': created_at,
+            'updated_at': updated_at
+        }
+        self.__conn.commit()
+
+        return result
