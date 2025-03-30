@@ -1,10 +1,8 @@
 from fastapi import APIRouter, Request
-from fastapi.responses import JSONResponse, Response
+from fastapi.responses import JSONResponse
 from typing import Union
-import httpx
 
 from server.api import schemas
-import server.config as config
 
 router = APIRouter()
 

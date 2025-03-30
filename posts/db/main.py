@@ -77,3 +77,23 @@ class Database:
         self.__conn.commit()
 
         return result
+    
+    def get_post(self, post_id: int) -> dict | None:
+        self.__cursor.execute('SELECT name, description, author_id, is_private, tags, created_at, updated_at FROM posts WHERE id = %s', (post_id, ))
+        result = self.__cursor.fetchone()
+        if result is None:
+            return None
+        
+        name, description, author_id, is_private, tags, created_at, updated_at = result
+        tags = json.loads(tags)
+        result = {
+            'name': name,
+            'description': description,
+            'author_id': author_id,
+            'is_private': is_private,
+            'tags': tags,
+            'created_at': created_at,
+            'updated_at': updated_at
+        }
+
+        return result

@@ -61,8 +61,22 @@ class GrpcClient:
         except grpc.RpcError as e:
             return schemas.ApiErrorResponse(exceptionMessage=str(e.details()))
 
-    def get_post(self, get_post_request: schemas.GetPostRequest) -> schemas.Post:
-        pass
+    def get_post(self, post_id: int) -> schemas.Post:
+        try:
+            response = self.__stub.GetPost(posts_pb2.GetPostRequest(
+                post_id=post_id
+            ))
+            return schemas.Post(
+                name=response.name,
+                description=response.description,
+                author_id=response.author_id,
+                is_private=response.is_private,
+                tags=response.tags,
+                created_at=datetime.fromtimestamp(response.created_at.seconds),
+                updated_at=datetime.fromtimestamp(response.updated_at.seconds)
+            )
+        except grpc.RpcError as e:
+            return schemas.ApiErrorResponse(exceptionMessage=str(e.details()))
 
     def get_posts_pages(self, get_post_paged_request: schemas.GetPostsPagedRequest) -> schemas.GetPostsPagedResponse:
         pass

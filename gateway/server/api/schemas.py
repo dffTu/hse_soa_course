@@ -60,9 +60,6 @@ class UpdatePostRequest(BaseModel):
 class DeletePostRequest(BaseModel):
     post_id: int
 
-class GetPostRequest(BaseModel):
-    post_id: int
-
 class GetPostsPagedRequest(BaseModel):
     page: int
     page_size: int
