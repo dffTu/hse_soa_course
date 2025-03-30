@@ -3,6 +3,7 @@ import os
 
 import uvicorn
 from fastapi import FastAPI
+from contextlib import asynccontextmanager
 from fastapi.exception_handlers import request_validation_exception_handler
 from fastapi.exceptions import RequestValidationError
 from starlette.middleware.cors import CORSMiddleware
@@ -12,6 +13,7 @@ from starlette.responses import Response
 
 import server.config as config
 from server.api import router
+from server.grpc.grpc_client import GrpcClient
 
 logger = logging.getLogger(__name__)
 
@@ -19,8 +21,14 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
     logger.exception("Invalid request data: %s", exc)
     return await request_validation_exception_handler(request, exc)
 
+@asynccontextmanager
+async def lifespan(application: FastAPI):
+    application.grpc_client = GrpcClient(config.POSTS_SERVER_ADDR)
+    yield
+
 app = FastAPI(
     title="gateway",
+    lifespan=lifespan
 )
 
 app.exception_handler(RequestValidationError)(validation_exception_handler)
