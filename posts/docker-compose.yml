@@ -6,7 +6,7 @@ services:
     env_file:
       - .env
     networks:
-      - posts-internal-network
+      - database-network
     ports:
       - "6667:5432"
     healthcheck:
@@ -28,12 +28,12 @@ services:
       - 9999:9999
     networks:
       - shared-network
-      - posts-internal-network
+      - database-network
 
 networks:
-  posts-internal-network:
+  database-network:
     driver: bridge
-    internal: true
+    external: true
 
   shared-network:
     driver: bridge

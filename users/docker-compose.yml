@@ -6,7 +6,7 @@ services:
     env_file:
       - .env
     networks:
-      - users-internal-network
+      - database-network
     ports:
       - "6666:5432"
     healthcheck:
@@ -28,12 +28,12 @@ services:
       - 8888:8888
     networks:
       - shared-network
-      - users-internal-network
+      - database-network
 
 networks:
-  users-internal-network:
+  database-network:
     driver: bridge
-    internal: true
+    external: true
 
   shared-network:
     driver: bridge
