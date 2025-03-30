@@ -44,10 +44,10 @@ class GrpcClient:
         except grpc.RpcError as e:
             return schemas.ApiErrorResponse(exceptionMessage=str(e.details()))
     
-    def delete_post(self, delete_post_request: schemas.DeletePostRequest) -> schemas.Post | schemas.ApiErrorResponse:
+    def delete_post(self, post_id: int) -> schemas.Post | schemas.ApiErrorResponse:
         try:
             response = self.__stub.DeletePost(posts_pb2.DeletePostRequest(
-                post_id=delete_post_request.post_id
+                post_id=post_id
             ))
             return schemas.Post(
                 name=response.name,

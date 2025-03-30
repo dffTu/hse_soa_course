@@ -24,12 +24,12 @@ async def update_post(
         return JSONResponse(status_code=404, content=response.model_dump())
     return response
 
-@router.delete("/change_posts", response_model=Union[schemas.Post, schemas.ApiErrorResponse])
+@router.delete("/change_posts/{post_id}", response_model=Union[schemas.Post, schemas.ApiErrorResponse])
 async def delete_post(
     request: Request,
-    post: schemas.DeletePostRequest,
+    post_id: int,
 ):
-    response = request.app.grpc_client.delete_post(post)
+    response = request.app.grpc_client.delete_post(post_id)
     if isinstance(response, schemas.ApiErrorResponse):
         return JSONResponse(status_code=404, content=response.model_dump())
     return response

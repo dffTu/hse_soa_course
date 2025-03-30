@@ -57,9 +57,6 @@ class UpdatePostRequest(BaseModel):
     is_private: bool
     tags: list[str]
 
-class DeletePostRequest(BaseModel):
-    post_id: int
-
 class GetPostsPagedRequest(BaseModel):
     page: int
     page_size: int
