@@ -5,6 +5,8 @@ services:
     container_name: users_postgres
     env_file:
       - .env
+    networks:
+      - users-internal-network
     ports:
       - "6666:5432"
 
@@ -18,3 +20,15 @@ services:
     command: python server/main.py
     ports:
       - 8888:8888
+    networks:
+      - shared-network
+      - users-internal-network
+
+networks:
+  users-internal-network:
+    driver: bridge
+    internal: true
+
+  shared-network:
+    driver: bridge
+    external: true
