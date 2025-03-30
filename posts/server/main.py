@@ -40,7 +40,7 @@ def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     posts_pb2_grpc.add_PostsServiceServicer_to_server(
         Service(), server)
-    server.add_insecure_port(f'[::]:{config.PORT}')
+    server.add_insecure_port(f'{config.SERVER_IP}:{config.PORT}')
     server.start()
     server.wait_for_termination()
 
