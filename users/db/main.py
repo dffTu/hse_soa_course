@@ -8,7 +8,6 @@ from datetime import datetime, timezone
 
 class Database:
     def __init__(self):
-        time.sleep(5)
         self.__conn = psycopg2.connect(
             dbname=os.environ['DB_NAME'],
             user=os.environ['DB_USER'],
