@@ -3,3 +3,5 @@ uvicorn
 asyncio
 psycopg2-binary
 httpx
+grpcio
+grpcio-tools
