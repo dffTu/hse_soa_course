@@ -36,7 +36,10 @@ message CreatePostResponse {
 
 message UpdatePostRequest {
     int32 post_id = 1;
-    Post post = 2;
+    string name = 2;
+    string description = 3;
+    bool is_private = 4;
+    repeated string tags = 5;
 }
 
 message DeletePostRequest {
