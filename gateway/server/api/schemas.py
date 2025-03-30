@@ -57,7 +57,7 @@ class UpdatePostRequest(BaseModel):
     is_private: bool
     tags: list[str]
 
-class DeletePostRequst(BaseModel):
+class DeletePostRequest(BaseModel):
     post_id: int
 
 class GetPostRequest(BaseModel):

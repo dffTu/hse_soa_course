@@ -55,3 +55,25 @@ class Database:
         self.__conn.commit()
 
         return result
+    
+    def delete_post(self, post_id: int) -> dict | None:
+        self.__cursor.execute('SELECT * FROM posts WHERE id = %s', (post_id, ))
+        if self.__cursor.fetchone() is None:
+            return None
+        
+        self.__cursor.execute('DELETE FROM posts WHERE id = %s RETURNING name, description, author_id, is_private, tags, created_at, updated_at',
+                              (post_id, ))
+        name, description, author_id, is_private, tags, created_at, updated_at = self.__cursor.fetchone()
+        tags = json.loads(tags)
+        result = {
+            'name': name,
+            'description': description,
+            'author_id': author_id,
+            'is_private': is_private,
+            'tags': tags,
+            'created_at': created_at,
+            'updated_at': updated_at
+        }
+        self.__conn.commit()
+
+        return result

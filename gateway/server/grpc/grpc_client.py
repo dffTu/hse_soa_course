@@ -44,8 +44,22 @@ class GrpcClient:
         except grpc.RpcError as e:
             return schemas.ApiErrorResponse(exceptionMessage=str(e.details()))
     
-    def delete_post(self, delete_post_request: schemas.DeletePostRequst) -> schemas.Post:
-        pass
+    def delete_post(self, delete_post_request: schemas.DeletePostRequest) -> schemas.Post | schemas.ApiErrorResponse:
+        try:
+            response = self.__stub.DeletePost(posts_pb2.DeletePostRequest(
+                post_id=delete_post_request.post_id
+            ))
+            return schemas.Post(
+                name=response.name,
+                description=response.description,
+                author_id=response.author_id,
+                is_private=response.is_private,
+                tags=response.tags,
+                created_at=datetime.fromtimestamp(response.created_at.seconds),
+                updated_at=datetime.fromtimestamp(response.updated_at.seconds)
+            )
+        except grpc.RpcError as e:
+            return schemas.ApiErrorResponse(exceptionMessage=str(e.details()))
 
     def get_post(self, get_post_request: schemas.GetPostRequest) -> schemas.Post:
         pass
