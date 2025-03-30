@@ -1,0 +1,56 @@
+syntax = "proto3";
+
+package posts;
+
+import "google/protobuf/timestamp.proto";
+
+service PostsService {
+  rpc CreatePost (CreatePostRequest) returns (CreatePostResponse) {}
+  rpc UpdatePost (UpdatePostRequest) returns (Post) {}
+  rpc DeletePost (DeletePostRequest) returns (Post) {}
+  rpc GetPost (GetPostRequest) returns (Post) {}
+  rpc GetPostsPaged (GetPostsPagedRequest) returns (GetPostsPagedResponse) {}
+}
+
+message Post {
+    string name = 1;
+    string description = 2;
+    int32 author_id = 3;
+    google.protobuf.Timestamp created_at = 4;
+    google.protobuf.Timestamp updated_at = 5;
+    bool is_private = 6;
+    repeated string tags = 7;
+}
+
+message CreatePostRequest {
+    Post post_info = 1;
+}
+
+message CreatePostResponse {
+    int32 post_id = 1;
+}
+
+message UpdatePostRequest {
+    int32 post_id = 1;
+    Post post = 2;
+}
+
+message DeletePostRequest {
+    int32 post_id = 1;
+}
+
+message GetPostRequest {
+    int32 post_id = 1;
+}
+
+message GetPostsPagedRequest {
+    int32 page = 1;
+    int32 page_size = 2;
+}
+
+message GetPostsPagedResponse {
+    repeated Post posts = 1;
+    int32 page = 2;
+    int32 total_pages = 3;
+    int32 total_posts = 4;
+}

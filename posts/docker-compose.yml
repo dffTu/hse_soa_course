@@ -1,20 +1,20 @@
 services:
 
-  users_postgres:
+  posts_postgres:
     image: postgres:latest
-    container_name: users_postgres
+    container_name: posts_postgres
     env_file:
       - .env
     ports:
-      - "6666:5432"
+      - "6667:5432"
 
-  users_server:
+  posts_server:
     build: .
-    container_name: users_server
+    container_name: posts_server
     depends_on:
-      - users_postgres
+      - posts_postgres
     env_file:
       - .env
     command: python server/main.py
     ports:
-      - 8888:8888
+      - 9999:9999
