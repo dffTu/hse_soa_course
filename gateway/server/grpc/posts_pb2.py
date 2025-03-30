@@ -22,31 +22,32 @@ _runtime_version.ValidateProtobufRuntimeVersion(
 _sym_db = _symbol_database.Default()
 
 
+from google.protobuf import timestamp_pb2 as google_dot_protobuf_dot_timestamp__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x17server/grpc/posts.proto\x12\x05posts\"^\n\x04Post\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x13\n\x0b\x64\x65scription\x18\x02 \x01(\t\x12\x11\n\tauthor_id\x18\x03 \x01(\x05\x12\x12\n\nis_private\x18\x04 \x01(\x08\x12\x0c\n\x04tags\x18\x05 \x03(\t\"3\n\x11\x43reatePostRequest\x12\x1e\n\tpost_info\x18\x01 \x01(\x0b\x32\x0b.posts.Post\"%\n\x12\x43reatePostResponse\x12\x0f\n\x07post_id\x18\x01 \x01(\x05\"?\n\x11UpdatePostRequest\x12\x0f\n\x07post_id\x18\x01 \x01(\x05\x12\x19\n\x04post\x18\x02 \x01(\x0b\x32\x0b.posts.Post\"$\n\x11\x44\x65letePostRequest\x12\x0f\n\x07post_id\x18\x01 \x01(\x05\"!\n\x0eGetPostRequest\x12\x0f\n\x07post_id\x18\x01 \x01(\x05\"7\n\x14GetPostsPagedRequest\x12\x0c\n\x04page\x18\x01 \x01(\x05\x12\x11\n\tpage_size\x18\x02 \x01(\x05\"k\n\x15GetPostsPagedResponse\x12\x1a\n\x05posts\x18\x01 \x03(\x0b\x32\x0b.posts.Post\x12\x0c\n\x04page\x18\x02 \x01(\x05\x12\x13\n\x0btotal_pages\x18\x03 \x01(\x05\x12\x13\n\x0btotal_posts\x18\x04 \x01(\x05\x32\xc0\x02\n\x0cPostsService\x12\x43\n\nCreatePost\x12\x18.posts.CreatePostRequest\x1a\x19.posts.CreatePostResponse\"\x00\x12\x35\n\nUpdatePost\x12\x18.posts.UpdatePostRequest\x1a\x0b.posts.Post\"\x00\x12\x35\n\nDeletePost\x12\x18.posts.DeletePostRequest\x1a\x0b.posts.Post\"\x00\x12/\n\x07GetPost\x12\x15.posts.GetPostRequest\x1a\x0b.posts.Post\"\x00\x12L\n\rGetPostsPaged\x12\x1b.posts.GetPostsPagedRequest\x1a\x1c.posts.GetPostsPagedResponse\"\x00\x62\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x17server/grpc/posts.proto\x12\x05posts\x1a\x1fgoogle/protobuf/timestamp.proto\"\xbe\x01\n\x04Post\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x13\n\x0b\x64\x65scription\x18\x02 \x01(\t\x12\x11\n\tauthor_id\x18\x03 \x01(\x05\x12\x12\n\nis_private\x18\x04 \x01(\x08\x12\x0c\n\x04tags\x18\x05 \x03(\t\x12.\n\ncreated_at\x18\x06 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12.\n\nupdated_at\x18\x07 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"k\n\x11\x43reatePostRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x13\n\x0b\x64\x65scription\x18\x02 \x01(\t\x12\x11\n\tauthor_id\x18\x03 \x01(\x05\x12\x12\n\nis_private\x18\x04 \x01(\x08\x12\x0c\n\x04tags\x18\x05 \x03(\t\"%\n\x12\x43reatePostResponse\x12\x0f\n\x07post_id\x18\x01 \x01(\x05\"?\n\x11UpdatePostRequest\x12\x0f\n\x07post_id\x18\x01 \x01(\x05\x12\x19\n\x04post\x18\x02 \x01(\x0b\x32\x0b.posts.Post\"$\n\x11\x44\x65letePostRequest\x12\x0f\n\x07post_id\x18\x01 \x01(\x05\"!\n\x0eGetPostRequest\x12\x0f\n\x07post_id\x18\x01 \x01(\x05\"7\n\x14GetPostsPagedRequest\x12\x0c\n\x04page\x18\x01 \x01(\x05\x12\x11\n\tpage_size\x18\x02 \x01(\x05\"k\n\x15GetPostsPagedResponse\x12\x1a\n\x05posts\x18\x01 \x03(\x0b\x32\x0b.posts.Post\x12\x0c\n\x04page\x18\x02 \x01(\x05\x12\x13\n\x0btotal_pages\x18\x03 \x01(\x05\x12\x13\n\x0btotal_posts\x18\x04 \x01(\x05\x32\xc0\x02\n\x0cPostsService\x12\x43\n\nCreatePost\x12\x18.posts.CreatePostRequest\x1a\x19.posts.CreatePostResponse\"\x00\x12\x35\n\nUpdatePost\x12\x18.posts.UpdatePostRequest\x1a\x0b.posts.Post\"\x00\x12\x35\n\nDeletePost\x12\x18.posts.DeletePostRequest\x1a\x0b.posts.Post\"\x00\x12/\n\x07GetPost\x12\x15.posts.GetPostRequest\x1a\x0b.posts.Post\"\x00\x12L\n\rGetPostsPaged\x12\x1b.posts.GetPostsPagedRequest\x1a\x1c.posts.GetPostsPagedResponse\"\x00\x62\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'server.grpc.posts_pb2', _globals)
 if not _descriptor._USE_C_DESCRIPTORS:
   DESCRIPTOR._loaded_options = None
-  _globals['_POST']._serialized_start=34
-  _globals['_POST']._serialized_end=128
-  _globals['_CREATEPOSTREQUEST']._serialized_start=130
-  _globals['_CREATEPOSTREQUEST']._serialized_end=181
-  _globals['_CREATEPOSTRESPONSE']._serialized_start=183
-  _globals['_CREATEPOSTRESPONSE']._serialized_end=220
-  _globals['_UPDATEPOSTREQUEST']._serialized_start=222
-  _globals['_UPDATEPOSTREQUEST']._serialized_end=285
-  _globals['_DELETEPOSTREQUEST']._serialized_start=287
-  _globals['_DELETEPOSTREQUEST']._serialized_end=323
-  _globals['_GETPOSTREQUEST']._serialized_start=325
-  _globals['_GETPOSTREQUEST']._serialized_end=358
-  _globals['_GETPOSTSPAGEDREQUEST']._serialized_start=360
-  _globals['_GETPOSTSPAGEDREQUEST']._serialized_end=415
-  _globals['_GETPOSTSPAGEDRESPONSE']._serialized_start=417
-  _globals['_GETPOSTSPAGEDRESPONSE']._serialized_end=524
-  _globals['_POSTSSERVICE']._serialized_start=527
-  _globals['_POSTSSERVICE']._serialized_end=847
+  _globals['_POST']._serialized_start=68
+  _globals['_POST']._serialized_end=258
+  _globals['_CREATEPOSTREQUEST']._serialized_start=260
+  _globals['_CREATEPOSTREQUEST']._serialized_end=367
+  _globals['_CREATEPOSTRESPONSE']._serialized_start=369
+  _globals['_CREATEPOSTRESPONSE']._serialized_end=406
+  _globals['_UPDATEPOSTREQUEST']._serialized_start=408
+  _globals['_UPDATEPOSTREQUEST']._serialized_end=471
+  _globals['_DELETEPOSTREQUEST']._serialized_start=473
+  _globals['_DELETEPOSTREQUEST']._serialized_end=509
+  _globals['_GETPOSTREQUEST']._serialized_start=511
+  _globals['_GETPOSTREQUEST']._serialized_end=544
+  _globals['_GETPOSTSPAGEDREQUEST']._serialized_start=546
+  _globals['_GETPOSTSPAGEDREQUEST']._serialized_end=601
+  _globals['_GETPOSTSPAGEDRESPONSE']._serialized_start=603
+  _globals['_GETPOSTSPAGEDRESPONSE']._serialized_end=710
+  _globals['_POSTSSERVICE']._serialized_start=713
+  _globals['_POSTSSERVICE']._serialized_end=1033
 # @@protoc_insertion_point(module_scope)
