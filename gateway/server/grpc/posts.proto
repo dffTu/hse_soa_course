@@ -2,8 +2,6 @@ syntax = "proto3";
 
 package posts;
 
-import "google/protobuf/timestamp.proto";
-
 service PostsService {
   rpc CreatePost (CreatePostRequest) returns (CreatePostResponse) {}
   rpc UpdatePost (UpdatePostRequest) returns (Post) {}
@@ -16,10 +14,8 @@ message Post {
     string name = 1;
     string description = 2;
     int32 author_id = 3;
-    google.protobuf.Timestamp created_at = 4;
-    google.protobuf.Timestamp updated_at = 5;
-    bool is_private = 6;
-    repeated string tags = 7;
+    bool is_private = 4;
+    repeated string tags = 5;
 }
 
 message CreatePostRequest {
