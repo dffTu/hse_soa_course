@@ -5,3 +5,9 @@ services:
     command: python server/main.py
     ports:
       - 7777:7777
+    networks:
+      - shared-network
+
+networks:
+  shared-network:
+    external: true

@@ -1,6 +1,6 @@
 from typing import Optional
 from pydantic import BaseModel
-from datetime import date
+from datetime import date, datetime
 
 
 class RegisterUserRequest(BaseModel):
@@ -29,3 +29,40 @@ class SuccesfulAuthResponse(BaseModel):
 
 class ApiErrorResponse(BaseModel):
     exceptionMessage: str
+
+
+class Post(BaseModel):
+    name: str
+    description: str
+    author_id: int
+    is_private: bool
+    tags: list[str]
+    created_at: datetime
+    updated_at: datetime
+
+class CreatePostRequest(BaseModel):
+    name: str
+    description: str
+    author_id: int
+    is_private: bool
+    tags: list[str]
+
+class CreatePostResponse(BaseModel):
+    post_id: int
+
+class UpdatePostRequest(BaseModel):
+    post_id: int
+    name: str
+    description: str
+    is_private: bool
+    tags: list[str]
+
+class GetPostsPagedRequest(BaseModel):
+    page: int
+    page_size: int
+
+class GetPostsPagedResponse(BaseModel):
+    posts: list[Post]
+    page: int
+    total_pages: int
+    total_posts: int
