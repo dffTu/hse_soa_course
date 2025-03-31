@@ -78,10 +78,29 @@ class Service(posts_pb2_grpc.PostsServiceServicer):
         )
 
     def GetPostsPaged(self, request, context):
-        """Missing associated documentation comment in .proto file."""
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        data = self.__db.get_posts_paged(
+            page=request.page,
+            page_size=request.page_size
+        )
+        
+        posts = [
+            posts_pb2.Post(
+                name=post['name'],
+                description=post['description'],
+                author_id=post['author_id'],
+                is_private=post['is_private'],
+                tags=post['tags'],
+                created_at=post['created_at'],
+                updated_at=post['updated_at']
+            ) for post in data['posts']
+        ]
+
+        return posts_pb2.GetPostsPagedResponse(
+            posts=posts,
+            page=data['page'],
+            total_pages=data['total_pages'],
+            total_posts=data['total_posts']
+        )
 
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))

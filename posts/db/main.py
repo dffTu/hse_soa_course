@@ -97,3 +97,32 @@ class Database:
         }
 
         return result
+    
+    def get_posts_paged(self, page: int, page_size: int) -> dict:
+        self.__cursor.execute('SELECT COUNT(*) FROM posts')
+        total_posts = self.__cursor.fetchone()[0]
+
+        self.__cursor.execute('SELECT name, description, author_id, is_private, tags, created_at, updated_at FROM posts LIMIT %s OFFSET %s',
+                              (page_size, (page - 1) * page_size))
+        posts = self.__cursor.fetchall()
+
+        posts = [
+            {
+                'name': name,
+                'description': description,
+                'author_id': author_id,
+                'is_private': is_private,
+                'tags': json.loads(tags),
+                'created_at': created_at,
+                'updated_at': updated_at
+            } for name, description, author_id, is_private, tags, created_at, updated_at in posts
+        ]
+        
+        result = {
+            'total_posts': total_posts,
+            'posts': posts,
+            'page': page,
+            'total_pages': (total_posts + page_size - 1) // page_size
+        }
+
+        return result
